@@ -1,36 +1,37 @@
 import "reflect-metadata";
-import { createConnection, ConnectionOptions } from "typeorm";
+import { createConnection } from "typeorm";
+import { Request, Response } from "express";
+import * as express from "express";
+import { AppRoutes } from "./routes";
 import { Photo } from "./entity/Photo";
 import { PhotoMetadata } from "./entity/PhotoMetadata";
 import { Author } from "./entity/Author";
 import { Album } from "./entity/Album";
 
-createConnection({
-  type: "mysql",
-  host: "localhost",
-  port: 3306,
-  username: "root",
-  password: "qweasd123@",
-  database: "typeorm",
-  entities: [Photo, PhotoMetadata, Author, Album],
-  synchronize: true,
-  logging: false,
-})
+createConnection()
   .then(async connection => {
-    let photos = await connection
-      .getRepository(Photo)
-      .createQueryBuilder("photo")
-      .innerJoinAndSelect("photo.metadata", "metadata")
-      .leftJoinAndSelect("photo.albums", "album")
-      .where("photo.isPublished = true")
-      .andWhere("(photo.name = :photoName OR photo.name = :bearName)")
-      .orderBy("photo.id", "DESC")
-      .skip(5)
-      .take(10)
-      .setParameters({ photoName: "My", bearName: "Mishka" })
-      .getMany();
-    photos.forEach(photo => console.log(photo));
-    // create a few albums
+    // create express app
+    const app = express();
+    app.use(express.json());
+
+    AppRoutes.forEach(route => {
+      app[route.method](
+        route.path,
+        (request: Request, response: Response, next: Function) => {
+          route
+            .action(request, response)
+            .then(() => next)
+            .catch(err => next(err));
+        }
+      );
+    });
+
+    // run app
+    app.listen(3000);
+
+    console.log("Express application is up and running on port 3000");
+
+    // // create a few albums
     // let album1 = new Album();
     // album1.name = "Bears";
     // await connection.manager.save(album1);
@@ -57,7 +58,7 @@ createConnection({
     // photo.views = 1;
     // photo.isPublished = true;
 
-    // create a photo metadata
+    // // create a photo metadata
     // let metadata = new PhotoMetadata();
     // metadata.height = 640;
     // metadata.width = 480;
@@ -73,7 +74,7 @@ createConnection({
 
     // let metadataRepository = connection.getRepository(PhotoMetadata);
 
-    // first we should save a photo
+    // // first we should save a photo
     // await photoRepository.save(photo);
 
     // console.log("Photo is saved, photo metadata is saved too.");
@@ -120,12 +121,12 @@ createConnection({
     // let photoToRemove = await photoRepository.findOne(1);
     // await photoRepository.remove(photoToRemove);
 
-    // let photos = await connection
+    // let photos2 = await connection
     //   .getRepository(Photo)
     //   .createQueryBuilder("photo")
     //   .innerJoinAndSelect("photo.metadata", "metadata")
     //   .getMany();
 
-    // console.log(photos);
+    // console.log(photos2);
   })
-  .catch(error => console.error(error));
+  .catch(error => console.error("TypeORM connection error: ", error));

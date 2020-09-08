@@ -6,6 +6,7 @@
     "password": "qweasd123@",
     "database": "testDB",
     "synchronize": true,
+    "logging": false,
     "entities": [
       "src/entity/*.js"
     ],
