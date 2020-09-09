@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { userGetAllAction } from "../controller/users";
+import { userGetAllAction } from "../controller/user";
 
-export const userRouter = Router();
+const userRouter = Router();
 
 userRouter.get("/", userGetAllAction);
-// userRouter.post("/signup", usersController.PostSignupAction);
+
+export default userRouter;
 
 // app.get("/users", async function (req: Request, res: Response) {
 //   const users = await userRepository.find();
