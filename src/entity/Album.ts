@@ -10,12 +10,12 @@ import { Photo } from "./Photo";
 @Entity()
 export class Album {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @ManyToMany(type => Photo, photo => photo.albums)
   @JoinTable()
-  photos: Photo[];
+  photos!: Photo[];
 }

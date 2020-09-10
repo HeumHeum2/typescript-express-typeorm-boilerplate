@@ -13,33 +13,33 @@ import { Album } from "./Album";
 @Entity()
 export class Photo {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({
     length: 100,
   })
-  name: string;
+  name!: string;
 
   @Column("text")
-  description: string;
+  description!: string;
 
   @Column()
-  filename: string;
+  filename!: string;
 
   @Column("double")
-  views: number;
+  views!: number;
 
   @Column()
-  isPublished: boolean;
+  isPublished!: boolean;
 
   @OneToOne(type => PhotoMetadata, photoMetadata => photoMetadata.photo, {
     cascade: true,
   })
-  metadata: PhotoMetadata;
+  metadata!: PhotoMetadata;
 
   @ManyToOne(type => Author, author => author.photos)
-  author: Author;
+  author!: Author;
 
   @ManyToMany(type => Album, album => album.photos)
-  albums: Album[];
+  albums!: Album[];
 }

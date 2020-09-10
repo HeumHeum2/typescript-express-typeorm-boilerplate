@@ -1,20 +1,12 @@
 import "reflect-metadata";
 import * as express from "express";
 import { Request, Response } from "express";
-import { createConnection } from "typeorm";
 import * as morgan from "morgan";
 import * as cors from "cors";
 import "dotenv/config";
 
 // Import Routers
 import userRouter from "./routes/user";
-
-// create typeorm connection
-createConnection()
-  .then(connection => {
-    console.log("DB connection :)");
-  })
-  .catch(error => console.error(error));
 
 // create and setup express app
 const app = express();
@@ -44,6 +36,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // register routes
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
 
 export default app;

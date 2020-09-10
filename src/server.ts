@@ -1,6 +1,10 @@
 import app from "./index";
+import { createTypeormConn } from "./utils/createTypeormConn";
 
 const prod = process.env.NODE_ENV === "production";
+
+// create typeorm connection
+createTypeormConn();
 
 // start express server
 if (prod) {

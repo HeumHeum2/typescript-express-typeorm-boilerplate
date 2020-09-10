@@ -1,15 +1,21 @@
 import { Request, Response } from "express";
-import { getConnection } from "typeorm";
+import { getRepository } from "typeorm";
 import { User } from "../entity/User";
 
-export async function PostSignupAction(request: Request, response: Response) {
-  const userRespository = getConnection().getRepository(User);
-  const user = await userRespository.save(request.body);
-  response.send(user);
-}
+export const createUser = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const newUser = getRepository(User).create(req.body);
+  console.log(newUser);
+  const results = await getRepository(User).save(newUser);
+  return res.json(results);
+};
 
-export async function userGetAllAction(request: Request, response: Response) {
-  const userRespository = getConnection().getRepository(User);
-  const user = await userRespository.find();
-  response.send(user);
-}
+export const getUsers = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const user = await getRepository(User).find();
+  return res.send(user);
+};

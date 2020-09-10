@@ -10,24 +10,24 @@ import { Photo } from "./Photo";
 @Entity()
 export class PhotoMetadata {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column("int")
-  height: number;
+  height!: number;
 
   @Column("int")
-  width: number;
+  width!: number;
 
   @Column()
-  orientation: string;
+  orientation!: string;
 
   @Column()
-  compressed: boolean;
+  compressed!: boolean;
 
   @Column()
-  comment: string;
+  comment!: string;
 
   @OneToOne(type => Photo, photo => photo.metadata)
   @JoinColumn()
-  photo: Photo;
+  photo!: Photo;
 }

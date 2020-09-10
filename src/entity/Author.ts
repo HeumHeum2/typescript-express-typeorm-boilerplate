@@ -11,11 +11,11 @@ import { Photo } from "./Photo";
 @Entity()
 export class Author {
   @PrimaryColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @OneToMany(type => Photo, photo => photo.author) // note: we will create author
-  photos: Photo[];
+  photos!: Photo[];
 }
