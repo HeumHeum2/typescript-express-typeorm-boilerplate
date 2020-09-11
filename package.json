@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
-    "test-server": "NODE_ENV=test ts-node src/server.ts",
+    "test-server": "NODE_ENV=test nodemon --exec ts-node src/server.ts",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/server.ts",
     "start": "cross-env NODE_ENV=production ts-node src/server.ts"
   },
@@ -24,6 +24,7 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
+    "swagger-ui-express": "^4.1.4",
     "typeorm": "^0.2.25"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "@types/morgan": "^1.9.1",
     "@types/node": "^14.6.4",
     "@types/supertest": "^2.0.10",
+    "@types/swagger-ui-express": "^4.1.2",
     "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2",

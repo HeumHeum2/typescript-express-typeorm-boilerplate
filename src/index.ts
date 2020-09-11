@@ -3,7 +3,10 @@ import * as express from "express";
 import { Request, Response } from "express";
 import * as morgan from "morgan";
 import * as cors from "cors";
+import * as swaggerUi from "swagger-ui-express";
 import "dotenv/config";
+
+import * as swaggerDocument from "./swagger.json";
 
 // Import Routers
 import userRouter from "./routes/user";
@@ -36,6 +39,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // register routes
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/users", userRouter);
 
 export default app;
